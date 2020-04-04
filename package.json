@@ -1,0 +1,48 @@
+{
+  "name": "@ivor/gatsby-plugin-intl",
+  "private": false,
+  "main": "index.js",
+  "description": "A plugin to automatically generate localized versions of your pages with SEO support",
+  "version": "0.4.3",
+  "author": "Aggelos Arvanitakis (@3nvi)",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.6",
+    "babel-preset-gatsby-package": "^0.2.16",
+    "cross-env": "^7.0.1"
+  },
+  "peerDependencies": {
+    "gatsby": ">=2.0.0",
+    "gatsby-plugin-react-helmet": ">=3.1.6",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "react-helmet": ">=5.2.1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-plugin-intl",
+    "i18n",
+    "intl",
+    "internalization",
+    "multi-language"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore **/__tests__",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "prepare": "cross-env NODE_ENV=production npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/3nvi/gatsby-intl",
+    "directory": "packages/gatsby-plugin-intl"
+  },
+  "bugs": {
+    "url": "https://github.com/3nvi/gatsby-intl/issues"
+  },
+  "gitHead": "7dd8a6460c1f40074c4c329a8941d5023ae0f5b3"
+}
