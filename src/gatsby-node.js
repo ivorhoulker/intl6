@@ -38,8 +38,8 @@ export const onCreatePage = async (
 
   await Promise.all(
     supportedLanguages.map(async (lang) => {
-      const localizedPath = `/${lang}${page.path}`;
-      const qlang = lang === 'cn' ? 'zh' : lang;
+      const localizedPath = lang !== defaultLanguage ? `/${lang}${page.path}` : page.path;
+      const qlang = lang.includes('zh') ? 'zh' : lang;
       // create a redirect based on the accept-language header
       createRedirect({
         fromPath: originalPath,
@@ -65,13 +65,13 @@ export const onCreatePage = async (
 
   // Create a fallback redirect if the language is not supported or the
   // Accept-Language header is missing for some reason
-  createRedirect({
-    fromPath: originalPath,
-    toPath: `/${defaultLanguage}${page.path}`,
-    isPermanent: false,
-    redirectInBrowser: isEnvDevelopment,
-    statusCode: is404 ? 404 : 301,
-  });
+  // createRedirect({
+  //   fromPath: originalPath,
+  //   toPath: `/${defaultLanguage}${page.path}`,
+  //   isPermanent: false,
+  //   redirectInBrowser: isEnvDevelopment,
+  //   statusCode: is404 ? 404 : 301,
+  // });
 };
 
 export const onPreBuild = ({ actions: { createRedirect } }, pluginOptions) => {
