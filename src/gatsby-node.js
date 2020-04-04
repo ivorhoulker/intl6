@@ -29,7 +29,6 @@ export const onCreatePage = async (
   if (excludedPages.includes(originalPath)) {
     return;
   }
-  
 
   // Delete the original page (since we are gonna create localized versions of it) and add a
   // redirect header
@@ -38,9 +37,9 @@ export const onCreatePage = async (
   }
 
   await Promise.all(
-    supportedLanguages.map(async lang => {
+    supportedLanguages.map(async (lang) => {
       const localizedPath = `/${lang}${page.path}`;
-
+      const qlang = lang === 'cn' ? 'zh' : lang;
       // create a redirect based on the accept-language header
       createRedirect({
         fromPath: originalPath,
@@ -58,6 +57,7 @@ export const onCreatePage = async (
           ...page.context,
           originalPath,
           lang,
+          qlang,
         },
       });
     })
