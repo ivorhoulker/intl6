@@ -1,5 +1,7 @@
 # `gatsby-plugin-intl`
 
+Forked this but had to serve as individual repos to install via npm.
+
 Helps with i18n by creating pages for all your supported locales. This is a low level plugin that
 [gatsby-theme-intl](https://github.com/3nvi/gatsby-intl/tree/master/packages/gatsby-theme-intl) depends upon. You should
 be using it only if you already have a methodology for handling translations.
