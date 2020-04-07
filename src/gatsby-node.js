@@ -41,6 +41,7 @@ export const onCreatePage = async (
       const localizedPath = `/${lang}${page.path}`;
       const qlang = lang.includes('zh') ? 'zh' : lang; // create a redirect based on the accept-language header
       // create a redirect based on the accept-language header
+      const slug = page.path.replace('/', '');
       createRedirect({
         fromPath: originalPath,
         toPath: localizedPath,
@@ -59,6 +60,7 @@ export const onCreatePage = async (
           originalPath,
           lang,
           qlang,
+          slug,
         },
       });
     })
