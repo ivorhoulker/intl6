@@ -19,17 +19,24 @@ export const wrapPageElement = ({ element, props }, pluginOptions) => {
   if (excludedPages.includes(props.location.pathname)) {
     return element;
   }
-
+  const langUrlDict = {
+    'zh-Hant': 'hk',
+    'zh-Hans': 'cn',
+    'en-US': 'en',
+    'en-GB': 'en',
+    en: 'en',
+    zh: 'zh',
+  };
   return (
     <React.Fragment>
       <Helmet htmlAttributes={{ lang }}>
         <meta property="og:locale" content={lang} />
         <link rel="canonical" href={`${siteUrl}/${lang}${originalPath}`} />
         <link rel="alternate" href={`${siteUrl}${originalPath}`} hrefLang="x-default" />
-        {supportedLanguages.map(supportedLang => (
+        {supportedLanguages.map((supportedLang) => (
           <link
             rel="alternate"
-            href={`${siteUrl}/${supportedLang}${originalPath}`}
+            href={`${siteUrl}/${langUrlDict[supportedLang]}${originalPath}`}
             hrefLang={supportedLang}
             key={supportedLang}
           />
