@@ -40,52 +40,44 @@ export const onCreatePage = async (
     'zh-Hans': 'cn',
     'en-US': 'en',
     'en-GB': 'en',
-    'en':'en',
-    'zh':'zh',
-  }
-  await Promise.all(supportedLanguages.map(async lang => {
-    
-    const langUrl = langUrlDict[lang]
-    const localizedPath = `/${langUrl}${page.path}`;
-    const qlang = lang.includes('zh') ? 'zh' : lang; // create a redirect based on the accept-language header
-    
-    const slug = page.path.replace('/', '')
-    createRedirect({
-      fromPath: originalPath,
-      toPath: localizedPath,
-      Language: lang,
-      isPermanent: false,
-      redirectInBrowser: isEnvDevelopment,
-      statusCode: is404 ? 404 : 301
-    });
-    await createPage(Object.assign({}, page, {
-      path: localizedPath,
-      context: Object.assign({}, page.context, {
-        localizedPath,
-        originalPath,
-        langUrl,
-        lang,
-        qlang,
-        slug
-      })
-    }));
-  })); // Create a fallback redirect if the language is not supported or the
+    en: 'en',
+    zh: 'zh',
+  };
+  await Promise.all(
+    supportedLanguages.map(async (lang) => {
+      const langUrl = langUrlDict[lang];
+      const localizedPath = `/${langUrl}${page.path}`;
+      const qlang = lang.includes('zh') ? 'zh' : lang; // create a redirect based on the accept-language header
+
+      const slug = page.path.replace('/', '');
+      createRedirect({
+        fromPath: originalPath,
+        toPath: localizedPath,
+        Language: lang,
+        isPermanent: false,
+        redirectInBrowser: isEnvDevelopment,
+        statusCode: is404 ? 404 : 301,
+      });
+      await createPage(
+        Object.assign({}, page, {
+          path: localizedPath,
+          context: Object.assign({}, page.context, {
+            localizedPath,
+            originalPath,
+            langUrl,
+            lang,
+            qlang,
+            slug,
+          }),
+        })
+      );
+    })
+  ); // Create a fallback redirect if the language is not supported or the
   // Accept-Language header is missing for some reason
 
   createRedirect({
     fromPath: originalPath,
     toPath: `/hk${page.path}`,
-    isPermanent: false,
-    redirectInBrowser: isEnvDevelopment,
-    statusCode: is404 ? 404 : 301
-  });
-};
-
-  // Create a fallback redirect if the language is not supported or the
-  // Accept-Language header is missing for some reason
-  createRedirect({
-    fromPath: originalPath,
-    toPath: `/${defaultLanguage}${page.path}`,
     isPermanent: false,
     redirectInBrowser: isEnvDevelopment,
     statusCode: is404 ? 404 : 301,
