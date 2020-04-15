@@ -89,7 +89,7 @@ export const onPreBuild = ({ actions: { createRedirect } }, pluginOptions) => {
   // we add a generic redirect to the "not found path" for every path that's not present in the app.
   // This rule needs to be the last one (so that it only kicks in if nothing else matched before),
   // thus it's added after all the page-related hooks have finished (hence "onPreBuild")
-
+  //new
   if (notFoundPage) {
     createRedirect({
       fromPath: '/*',
