@@ -31,7 +31,7 @@ export const wrapPageElement = ({ element, props }, pluginOptions) => {
     <React.Fragment>
       <Helmet htmlAttributes={{ lang, dir: 'ltr' }}>
         <meta property="og:locale" content={lang} />
-        <link rel="canonical" href={`${siteUrl}/${lang}${originalPath}`} />
+        <link rel="canonical" href={`${siteUrl}/${langUrlDict[lang]}${originalPath}`} />
         <link rel="alternate" href={`${siteUrl}${originalPath}`} hrefLang="x-default" />
         {supportedLanguages.map((supportedLang) => (
           <link
