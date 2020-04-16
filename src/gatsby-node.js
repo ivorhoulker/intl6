@@ -44,7 +44,7 @@ export const onCreatePage = async (
     zh: 'zh',
   };
   await Promise.all(
-    supportedLanguages.map(async (lang) => {
+    supportedLanguages.map(async (lang, i) => {
       const langUrl = langUrlDict[lang];
       const localizedPath = `/${langUrl}${page.path}`;
       const qlang = lang.includes('zh') ? 'zh' : lang; // create a redirect based on the accept-language header
@@ -55,8 +55,34 @@ export const onCreatePage = async (
         Language: lang,
         isPermanent: false,
         redirectInBrowser: isEnvDevelopment,
-        statusCode: is404 ? 404 : 301,
+        statusCode: is404 ? 404 : 302,
       });
+      if (i == supportedLanguages.length - 1) {
+        createRedirect({
+          fromPath: originalPath,
+          toPath: `/hk${page.path}`,
+          Country: 'hk,tw',
+          isPermanent: false,
+          redirectInBrowser: isEnvDevelopment,
+          statusCode: is404 ? 404 : 302,
+        });
+
+        createRedirect({
+          fromPath: originalPath,
+          toPath: `/cn${page.path}`,
+          Country: 'cn',
+          isPermanent: false,
+          redirectInBrowser: isEnvDevelopment,
+          statusCode: is404 ? 404 : 302,
+        });
+        createRedirect({
+          fromPath: originalPath,
+          toPath: `/en${page.path}`,
+          isPermanent: false,
+          redirectInBrowser: isEnvDevelopment,
+          statusCode: is404 ? 404 : 302,
+        });
+      }
       await createPage(
         Object.assign({}, page, {
           path: localizedPath,
@@ -73,13 +99,13 @@ export const onCreatePage = async (
   ); // Create a fallback redirect if the language is not supported or the
   // Accept-Language header is missing for some reason
 
-  createRedirect({
-    fromPath: originalPath,
-    toPath: `/hk${page.path}`,
-    isPermanent: false,
-    redirectInBrowser: isEnvDevelopment,
-    statusCode: is404 ? 404 : 301,
-  });
+  // createRedirect({
+  //   fromPath: originalPath,
+  //   toPath: `/hk${page.path}`,
+  //   isPermanent: false,
+  //   redirectInBrowser: isEnvDevelopment,
+  //   statusCode: is404 ? 404 : 301,
+  // });
 };
 
 export const onPreBuild = ({ actions: { createRedirect } }, pluginOptions) => {
