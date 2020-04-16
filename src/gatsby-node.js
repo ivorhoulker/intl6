@@ -52,7 +52,7 @@ export const onCreatePage = async (
       createRedirect({
         fromPath: originalPath,
         toPath: localizedPath,
-        Language: lang,
+        Language: lang == 'zh-Hant' ? 'zh-hk,zh-tw' : lang == 'zh-Hans' ? 'zh-cn,zh-sg' : 'en',
         isPermanent: false,
         redirectInBrowser: isEnvDevelopment,
         statusCode: is404 ? 404 : 302,
